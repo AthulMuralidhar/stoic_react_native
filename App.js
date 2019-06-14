@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  TextInput,
+  Button } from 'react-native';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { Switch, ScrollView } from 'react-native-gesture-handler';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 
 
 class Clock extends React.Component{
@@ -125,52 +131,158 @@ class HomeScreen extends React.Component{
 
 //TODO: IMPLIMENT FORMS BEFORE IMPLIMENTING TODO
 
-// let now = new Date();
+let id = 0;
 
-// const Todo = props => (
-//   <View style={styles.todoContainer}>
-//     <Switch value={props.data.opinions} onValueChange={props.onOpinionChecked}/>
-//     <Switch value={props.data.aims} onValueChange={props.onAimChecked}/>
-//     <Switch value={props.data.desires} onValueChange={props.onDesireChecked}/>
-//     <Switch value={props.data.aversions} onValueChange={props.onAversionChecked}/>
-//     <Text>{props.data.text}</Text>
-//   </View>
-// )
+const Internal = props => (
+  <View style={styles.todoContainer}>
+    <Switch value={props.data.opinions} onValueChange={props.onOpinionChecked}/>
+    <Switch value={props.data.aims} onValueChange={props.onAimChecked}/>
+    <Switch value={props.data.desires} onValueChange={props.onDesireChecked}/>
+    <Switch value={props.data.aversions} onValueChange={props.onAversionChecked}/>
+    <Text>{props.data.text}</Text>
+    <Button onPress={props.onDelete} title="delete"/>
+  </View>
+)
 
 class OverviewScreen extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      text: "Enter your internals",
+      internalslist:[],
+    }
+  }
+
+  handleAddNote(){
+    id++;
+    const internal = this.state.text;
+    this.setState({
+      internalslist:[...this.state.internalslist,
+        {text:internal,
+        id:id,
+        opinions:false,
+        aims:false,
+        desires:false,
+        aversions:false,
+      }]
+    });
+  }
+
+  handleDelete(id){
+    this.setState({
+      internalslist:this.state.internalslist.filter(internal=>internal.id!=id)
+    })
+  }
+
+  handleOpinions(id){
+	this.setState({
+	  internalslist:this.state.internalslist.map(internal=>{
+		if (internal.id===id) {
+		  return {
+        id:internal.id,
+        text:internal.text,
+        opinions:!internal.opinions,
+        aims: internal.aims,
+        desires:internal.desires,
+        aversions: internal.aversions
+      }
+		}
+		return internal
+	  })
+	})
+  }
+  
+  handleAims(id){
+    this.setState({
+      internalslist:this.state.internalslist.map(internal=>{
+      if (internal.id===id) {
+        return {
+          id:internal.id,
+          text:internal.text,
+          opinions:internal.opinions,
+          aims: !internal.aims,
+          desires:internal.desires,
+          aversions: internal.aversions
+  
+        }
+      }
+      return internal
+      })
+    })
+    }
+    
+  handleDesires(id){
+    this.setState({
+      internalslist:this.state.internalslist.map(internal=>{
+      if (internal.id===id) {
+        return {
+          id:internal.id,
+          text:internal.text,
+          opinions:internal.opinions,
+          aims: internal.aims,
+          desires:!internal.desires,
+          aversions: internal.aversions  
+        }
+      }
+      return internal
+      })
+    })
+    }
+  
+  handleAversions(id){
+      this.setState({
+        internalslist:this.state.internalslist.map(internal=>{
+        if (internal.id===id) {
+          return {
+            id:internal.id,
+            text:internal.text,
+            opinions:internal.opinions,
+            aims: internal.aims,
+            desires:internal.desires,
+            aversions: !internal.aversions    
+          }
+        }
+        return internal
+        })
+      })
+      }
+  
+
 
   render(){
     return(
     <View style={styles.container}>
       <Text>Overview screen!</Text>
-      {/* <Text>Total internals:{this.state.internalslist.length}</Text>
-      <Text>Total opinions:{this.state.internalslist.filter(todo=>todo.opinions).length}</Text>
-      <Text>Total aims:{this.state.internalslist.filter(todo=>todo.aims).length}</Text>
-      <Text>Total desires:{this.state.internalslist.filter(todo=>todo.desires).length}</Text>
-      <Text>Total aversions:{this.state.internalslist.filter(todo=>todo.aversions).length}</Text> */}
-        <Text>{"\n"}</Text>
-        <TouchableOpacity 
-            style={styles.btnStyle} 
-            onPress={()=>{this.props.navigation.navigate('Form')}}>
-            <Text>Go!</Text>
-        </TouchableOpacity>
+      <Text>Total internals:{this.state.internalslist.length}</Text>
+      <Text>Total opinions:{this.state.internalslist.filter(internal=>internal.opinions).length}</Text>
+      <Text>Total aims:{this.state.internalslist.filter(internal=>internal.aims).length}</Text>
+      <Text>Total desires:{this.state.internalslist.filter(internal=>internal.desires).length}</Text>
+      <Text>Total aversions:{this.state.internalslist.filter(internal=>internal.aversions).length}</Text>
+      <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}/>
+      <Button onPress={()=> this.handleAddNote()} title="Add Note"/>
+
+      <ScrollView style={styles.fill} >
+ 						{this.state.internalslist.map(internal => <Internal data={internal}
+ 							onDelete={()=>this.handleDelete(internal.id)}
+              onOpinionChecked={()=>this.handleOpinions(internal.id)}
+              onAimChecked={()=>this.handleAims(internal.id)}
+              onDesireChecked={()=>this.handleDesires(internal.id)}
+              onAversionChecked={()=>this.handleAversions(internal.id)}
+              key={internal.id}
+ 						/>)}
+ 			</ScrollView>
     </View>
     )
   }
 }
 
-//FORMSCREEN===========================================================================================
-const FormScreen = props => (
-  <View style={styles.container}>
-    <Text>Form Screen!</Text>
-  </View>
-)
-
 //NAVIGATION============================================================================================
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Overview: OverviewScreen,
-  Form: FormScreen,
 },
 {
   initialRouteName:"Home",
