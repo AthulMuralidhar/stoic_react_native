@@ -67,69 +67,6 @@ class HomeScreen extends React.Component{
 }
 
 //OVERVIEW=============================================================================================
-// let id=0
-//  
-// react-native IMPLIMENTATION OF TODO-LIST from CS50m
-// 
-// const Todo = props => (
-// 	<View style={styles.todoContainer}>
-// 		<Switch value={props.data.checked} onValueChange={props.onChecked}/>
-// 		<Button onPress={props.onDelete} title="delete"/>
-// 		<Text>{props.data.text}</Text>
-// 	</View>
-// )
-
-// export default class App extends React.Component {
-// 	constructor() {
-// 		super()
-//      		this.state = {
-//        		todolist:[]
-//      }
-// }
-// 	handleAddNote(){
-// 			id++
-//      		const todo = `Todo id:${id}`
-//      		this.setState({
-//        		todolist:[...this.state.todolist,{text:todo,id:id,checked:false}]
-//      })
-//   }
-
-//   handleDelete(id){
-//      		this.setState({
-//        		todolist:this.state.todolist.filter(todo=>todo.id !== id)
-//      })
-//   }
-
-//   handleChecked(id){
-// 	this.setState({
-// 	  todolist:this.state.todolist.map(todo=>{
-// 		if (todo.id===id) {
-// 		  return {id:todo.id,text:todo.text,checked:!todo.checked}
-// 		}
-// 		return todo
-// 	  })
-// 	})
-// 	}
-
-
-//   render() {
-// 		return (
-// 			<View style={[styles.appcontainer,styles.fill]}>
-// 				<Text>Todo Count:{this.state.todolist.length}</Text>
-// 				<Text>total unchecked todos:{this.state.todolist.filter(todo=>!todo.checked).length}</Text>
-// 				<Button onPress={()=> this.handleAddNote()} title="Add Note"/>
-// 				<ScrollView style={styles.fill}>
-// 						{this.state.todolist.map(todo => <Todo data={todo}
-// 							onDelete={()=>this.handleDelete(todo.id)}
-// 							onChecked={()=>this.handleChecked(todo.id)}
-// 						/>)}
-// 				</ScrollView>
-// 			</View>
-//     )
-//   }
-// }
-
-//TODO: IMPLIMENT FORMS BEFORE IMPLIMENTING TODO
 
 let id = 0;
 

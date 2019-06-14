@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "A practical counter for practicing stoics",
+    "githubUrl": "https://github.com/AthulMuralidhar/stoic_react_native"
   }
 }
